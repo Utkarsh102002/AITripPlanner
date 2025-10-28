@@ -27,7 +27,7 @@ function Hero() {
     <div className="mt-24 w-full flex justify-center">
       {/* Content */}
       <div className="max-w-3xl w-full text-center space-y-6">
-        <h1 className="text-xl md:text-5xl font-bold">
+        <h1 className="text-xl md:text-3xl font-bold">
           Hey, I'm Your Personal Trip Planner
         </h1>
         <p className="text-lg">Tell me what you want i will handle the rest</p>
