@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { SignInButton } from "@clerk/nextjs";
 
 const menuOptions = [
   {
@@ -13,10 +14,10 @@ const menuOptions = [
 ];
 function Header() {
   return (
-    <div className="flex justify-between p-4" >
+    <div className="flex justify-between p-4">
       {/* logo */}
       <div className="flex gap-2 items-center">
-        <Image src={"./logo.svg"} alt="logo" width={30} height={30} />
+        <Image src="./logo.svg" alt="logo" width={30} height={30} />
         <h2 className="font-bold text-2xl">AI TRIP PLANNER</h2>
       </div>
       {/* Menu Options */}
@@ -31,7 +32,9 @@ function Header() {
       </div>
       {/* Button */}
       <div>
-        <Button>Get Started</Button>
+        <SignInButton mode="modal">
+          <Button>Get Started</Button>
+        </SignInButton>
       </div>
     </div>
   );
