@@ -1,65 +1,34 @@
 import React from "react";
 
 export const SelectTravelesList = [
-  {
-    id: 1,
-
-    title: "Just Me",
-
-    desc: "A sole traveles in exploration",
-
-    icon: "✈️",
-
-    people: "1",
-  },
-
-  {
-    id: 2,
-
-    title: "A Couple",
-
-    desc: "Two traveles in tandem",
-
-    icon: "🥂",
-
-    people: "2 People",
-  },
-
-  {
-    id: 3,
-
-    title: "Family",
-
-    desc: "A group of fun loving adv",
-
-    icon: "🏡",
-
-    people: "3 to 5 People",
-  },
-
+  { id: 1, title: "Just Me", desc: "A solo traveler", icon: "🧍", people: "1" },
+  { id: 2, title: "A Couple", desc: "Two travelers", icon: "🥂", people: "2" },
+  { id: 3, title: "Family", desc: "3 to 5 people", icon: "🏡", people: "3-5" },
   {
     id: 4,
-
     title: "Friends",
-
-    desc: "A bunch of thrill-seekes",
-
+    desc: "5 to 10 people",
     icon: "⛵",
-
-    people: "5 to 10 People",
+    people: "5-10",
   },
 ];
 
-function GroupSize() {
-  return <div>
-    
-    {SelectTravelesList.map((item,index)=>(
-        <div key={index} className="p-3 border rounded-2xl bg-white hover:cursor-pointer">
-            <h2>{item.icon}</h2>
-            <h2>{item.title}</h2>
+function GroupSize({ onSelect }: { onSelect: (val: string) => void }) {
+  return (
+    <div className="grid grid-cols-2 gap-3 mt-2">
+      {SelectTravelesList.map((item) => (
+        <div
+          key={item.id}
+          onClick={() => onSelect(item.people)}
+          className="p-3 border rounded-2xl bg-white hover:bg-blue-100 hover:cursor-pointer transition"
+        >
+          <h2 className="text-2xl">{item.icon}</h2>
+          <h3 className="font-semibold">{item.title}</h3>
+          <p className="text-sm text-gray-500">{item.desc}</p>
         </div>
-    ))}
-    </div>;
+      ))}
+    </div>
+  );
 }
 
 export default GroupSize;

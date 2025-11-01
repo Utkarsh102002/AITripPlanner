@@ -94,6 +94,11 @@ import { Send, Loader } from "lucide-react";
 import axios from "axios";
 import EmptyState from "./EmptyState";
 import GroupSize from "./GroupSize";
+import TripDuration from "./TripDuration";
+
+
+import Budget from "./Budget";
+import Interests from "./Interest";
 
 type Message = {
   role: string,
@@ -152,13 +157,25 @@ function ChatBox() {
 
 
 const RenderGenerativeUi = (ui: string) => {
-  if (ui === "budget") {
-    return <div>Budget UI here</div>;
-  } else if (ui === "groupsize") {
-    return <GroupSize />;
+  const handleSelect = (value: string) => {
+    setUserInput(value);
+    onSend();
+  };
+
+  switch (ui) {
+    case "groupsize":
+      return <GroupSize onSelect={handleSelect} />;
+    case "budget":
+      return <Budget onSelect={handleSelect} />;
+    case "tripduration":
+      return <TripDuration onSelect={handleSelect} />;
+    case "interests":
+      return <Interests onSelect={handleSelect} />;
+    default:
+      return null;
   }
-  return null;
 };
+
 
   return (
     <div className="h-[75vh] flex flex-col">
@@ -180,7 +197,6 @@ const RenderGenerativeUi = (ui: string) => {
             <div className="flex justify-end mt-2" key={index}>
               <div className="max-w-lg bg-blue-600 text-white px-4 py-2 rounded-lg shadow">
                 {msg.content}
-                {RenderGenerativeUi(msg.ui??"")}
               </div>
             </div>
           ) : (
@@ -188,6 +204,7 @@ const RenderGenerativeUi = (ui: string) => {
             <div className="flex justify-start mt-2" key={index}>
               <div className="max-w-lg bg-gray-100 text-black px-4 py-2 rounded-lg shadow">
                 {msg.content}
+                {RenderGenerativeUi(msg.ui ?? "")}
               </div>
             </div>
           )
