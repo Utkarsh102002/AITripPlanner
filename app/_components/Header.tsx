@@ -48,7 +48,7 @@ function Header() {
         {/* When logged in */}
         <SignedIn>
           <div className="flex items-center gap-3">
-            <Link href="/create-trip">
+            <Link href="/create-new-trip">
               <Button className="px-5">Create New Trip</Button>
             </Link>
             <UserButton afterSignOutUrl="/" />
