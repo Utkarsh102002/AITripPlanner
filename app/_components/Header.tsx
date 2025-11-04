@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,7 +50,7 @@ function Header() {
             <Link href="/create-new-trip">
               <Button className="px-5">Create New Trip</Button>
             </Link>
-            <UserButton afterSignOutUrl="/" />
+            <UserButton/>
           </div>
         </SignedIn>
       </div>

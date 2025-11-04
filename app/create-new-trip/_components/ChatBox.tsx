@@ -1,78 +1,155 @@
 // "use client";
+
 // import React, { useState } from "react";
 // import { Textarea } from "@/components/ui/textarea";
 // import { Button } from "@/components/ui/button";
-// import { Send } from "lucide-react";
+// import { Send, Loader } from "lucide-react";
 // import axios from "axios";
+// import EmptyState from "./EmptyState";
+// import GroupSize from "./GroupSize";
+// import TripDuration from "./TripDuration";
+
+
+// import Budget from "./Budget";
+// import Interests from "./Interest";
 
 // type Message = {
-//   role: string;
-//   content: string;
+//   role: string,
+//   content: string,
+//   ui?:string,
 // };
 
 // function ChatBox() {
 //   const [messages, setMessages] = useState<Message[]>([]);
-//   const [userInput, setuserInput] = useState<string>();
+//   const [userInput, setUserInput] = useState<string>("");
+//   const [loading, setLoading] = useState(false);
 
+//   // ✅ Send message handler
 //   const onSend = async () => {
-//     if (!userInput?.trim()) return;
-//     setuserInput("");
+//     if (!userInput.trim()) return;
+
 //     const newMsg: Message = {
 //       role: "user",
 //       content: userInput,
 //     };
 
-//     setMessages((prev: Message[]) => [...prev, newMsg]);
+//     // Add user message immediately
+//     setMessages((prev) => [...prev, newMsg]);
+//     setUserInput("");
+//     setLoading(true);
 
-//     const result = await axios.post("/api/aimodel", {
-//       messages: [...messages, newMsg],
-//     });
+//     try {
+//       // ✅ Send user + history to backend
+//       const result = await axios.post("/api/aimodel", {
+//         messages: [...messages, newMsg],
+//       });
 
-//     setMessages((prev: Message[]) => [
-//       ...prev,
-//       {
-//         role: "assiatant",
-//         content: result?.data?.resp,
-//       },
-//     ]);
+//       const aiResponse = result?.data?.resp || "No response received.";
 
-//     console.log(result.data);
+//       // ✅ Add AI message
+//       setMessages((prev) => [
+//         ...prev,
+//         {
+//           role: "assistant",
+//           content: aiResponse,
+//           ui:result?.data?.ui,
+//         },
+//       ]);
+
+//       console.log("🧠 AI Response:", result.data);
+//     } catch (error) {
+//       console.error("🚨 API Error:", error);
+//       setMessages((prev) => [
+//         ...prev,
+//         { role: "assistant", content: "Error: Unable to fetch response." },
+//       ]);
+//     } finally {
+//       setLoading(false);
+//     }
 //   };
+
+
+// const RenderGenerativeUi = (ui: string) => {
+//   const handleSelect = (value: string) => {
+//     setUserInput(value);
+//     onSend();
+//   };
+
+//   switch (ui) {
+//     case "groupsize":
+//       return <GroupSize onSelect={handleSelect} />;
+//     case "budget":
+//       return <Budget onSelect={handleSelect} />;
+//     case "tripduration":
+//       return <TripDuration onSelect={handleSelect} />;
+//     case "interests":
+//       return <Interests onSelect={handleSelect} />;
+//     default:
+//       return null;
+//   }
+// };
+
 
 //   return (
 //     <div className="h-[75vh] flex flex-col">
-//       {/* display message */}
-//       <section className="flex-1 overflow-y-auto p-4">
-//         {messages.map((msg: Message, index) =>
-//           msg.role == "user" ? (
+//       {/* ✅ Empty state (first screen before chat starts) */}
+//       {messages?.length === 0 && (
+//         <EmptyState
+//           onSelectOption={(v: string) => {
+//             setUserInput(v);
+//             onSend();
+//           }}
+//         />
+//       )}
+
+//       {/* ✅ Chat Display */}
+//       <section className="flex-1 overflow-y-auto p-4 mb-3">
+//         {messages.map((msg, index) =>
+//           msg.role === "user" ? (
+//             // ✅ User message bubble
 //             <div className="flex justify-end mt-2" key={index}>
-//               <div className="max-w-lg bg-primary text-white px-4 py-2 rounded-lg">
+//               <div className="max-w-lg bg-blue-600 text-white px-4 py-2 rounded-lg shadow">
 //                 {msg.content}
 //               </div>
 //             </div>
 //           ) : (
+//             // ✅ Assistant message bubble
 //             <div className="flex justify-start mt-2" key={index}>
-//               <div className="max-w-lg bg-gray-100 text-Black px-4 py-2 rounded-lg">
+//               <div className="max-w-lg bg-gray-100 text-black px-4 py-2 rounded-lg shadow">
 //                 {msg.content}
+//                 {RenderGenerativeUi(msg.ui ?? "")}
 //               </div>
 //             </div>
 //           )
 //         )}
+
+//         {/* ✅ Loader (AI thinking...) */}
+//         {loading && (
+//           <div className="flex justify-start mt-2">
+//             <div className="max-w-lg bg-gray-100 text-black px-4 py-2 rounded-lg shadow flex items-center gap-2">
+//               <Loader className="h-4 w-4 animate-spin" />
+//               <span>Thinking...</span>
+//             </div>
+//           </div>
+//         )}
 //       </section>
 
-//       {/* user input  */}
-//       <section>
+//       {/* ✅ Input Section */}
+//       <section className="p-5 ">
 //         <div className="border rounded-2xl p-4 shadow relative">
 //           <Textarea
-//             placeholder="Start typeing here..."
-//             className="w-full h-28 bg-transparent border-none focus-visible:right-0 shadow-none resize-none "
-//             onChange={(event) => setuserInput(event.target.value)}
+//             placeholder="Start typing here..."
+//             className="w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none"
+//             onChange={(e) => setUserInput(e.target.value)}
 //             value={userInput}
 //           />
+
+//           {/* ✅ Send Button */}
 //           <Button
-//             size={"icon"}
-//             className="absolute bottom-6 right-6 "
-//             onClick={() => onSend()}
+//             size="icon"
+//             className="absolute bottom-6 right-6"
+//             onClick={onSend}
+//             disabled={loading}
 //           >
 //             <Send className="h-4 w-4" />
 //           </Button>
@@ -83,8 +160,6 @@
 // }
 
 // export default ChatBox;
-
-
 "use client";
 
 import React, { useState } from "react";
@@ -95,18 +170,20 @@ import axios from "axios";
 import EmptyState from "./EmptyState";
 import GroupSize from "./GroupSize";
 import TripDuration from "./TripDuration";
-
-
 import Budget from "./Budget";
 import Interests from "./Interest";
 
 type Message = {
-  role: string,
-  content: string,
-  ui?:string,
+  role: string;
+  content: string;
+  ui?: string;
 };
 
-function ChatBox() {
+type ChatBoxProps = {
+  onFinalTrip: (tripPlan: string) => void;
+};
+
+function ChatBox({ onFinalTrip }: ChatBoxProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -115,10 +192,7 @@ function ChatBox() {
   const onSend = async () => {
     if (!userInput.trim()) return;
 
-    const newMsg: Message = {
-      role: "user",
-      content: userInput,
-    };
+    const newMsg: Message = { role: "user", content: userInput };
 
     // Add user message immediately
     setMessages((prev) => [...prev, newMsg]);
@@ -126,24 +200,27 @@ function ChatBox() {
     setLoading(true);
 
     try {
-      // ✅ Send user + history to backend
       const result = await axios.post("/api/aimodel", {
         messages: [...messages, newMsg],
       });
 
       const aiResponse = result?.data?.resp || "No response received.";
+      const uiType = result?.data?.ui || "none";
 
-      // ✅ Add AI message
+      // ✅ Detect final trip plan automatically
+      if (
+        uiType === "final" ||
+        aiResponse.toLowerCase().includes("trip summary") ||
+        aiResponse.toLowerCase().includes("itinerary") ||
+        aiResponse.toLowerCase().includes("day 1")
+      ) {
+        onFinalTrip(aiResponse);
+      }
+
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: aiResponse,
-          ui:result?.data?.ui,
-        },
+        { role: "assistant", content: aiResponse, ui: uiType },
       ]);
-
-      console.log("🧠 AI Response:", result.data);
     } catch (error) {
       console.error("🚨 API Error:", error);
       setMessages((prev) => [
@@ -155,32 +232,30 @@ function ChatBox() {
     }
   };
 
+  const RenderGenerativeUi = (ui: string) => {
+    const handleSelect = (value: string) => {
+      setUserInput(value);
+      onSend();
+    };
 
-const RenderGenerativeUi = (ui: string) => {
-  const handleSelect = (value: string) => {
-    setUserInput(value);
-    onSend();
+    switch (ui) {
+      case "groupsize":
+        return <GroupSize onSelect={handleSelect} />;
+      case "budget":
+        return <Budget onSelect={handleSelect} />;
+      case "tripduration":
+        return <TripDuration onSelect={handleSelect} />;
+      case "interests":
+        return <Interests onSelect={handleSelect} />;
+      default:
+        return null;
+    }
   };
-
-  switch (ui) {
-    case "groupsize":
-      return <GroupSize onSelect={handleSelect} />;
-    case "budget":
-      return <Budget onSelect={handleSelect} />;
-    case "tripduration":
-      return <TripDuration onSelect={handleSelect} />;
-    case "interests":
-      return <Interests onSelect={handleSelect} />;
-    default:
-      return null;
-  }
-};
-
 
   return (
     <div className="h-[75vh] flex flex-col">
-      {/* ✅ Empty state (first screen before chat starts) */}
-      {messages?.length === 0 && (
+      {/* Empty start screen */}
+      {messages.length === 0 && (
         <EmptyState
           onSelectOption={(v: string) => {
             setUserInput(v);
@@ -189,18 +264,16 @@ const RenderGenerativeUi = (ui: string) => {
         />
       )}
 
-      {/* ✅ Chat Display */}
-      <section className="flex-1 overflow-y-auto p-4">
+      {/* Chat Section */}
+      <section className="flex-1 overflow-y-auto p-4 mb-3">
         {messages.map((msg, index) =>
           msg.role === "user" ? (
-            // ✅ User message bubble
             <div className="flex justify-end mt-2" key={index}>
               <div className="max-w-lg bg-blue-600 text-white px-4 py-2 rounded-lg shadow">
                 {msg.content}
               </div>
             </div>
           ) : (
-            // ✅ Assistant message bubble
             <div className="flex justify-start mt-2" key={index}>
               <div className="max-w-lg bg-gray-100 text-black px-4 py-2 rounded-lg shadow">
                 {msg.content}
@@ -210,7 +283,7 @@ const RenderGenerativeUi = (ui: string) => {
           )
         )}
 
-        {/* ✅ Loader (AI thinking...) */}
+        {/* Loader */}
         {loading && (
           <div className="flex justify-start mt-2">
             <div className="max-w-lg bg-gray-100 text-black px-4 py-2 rounded-lg shadow flex items-center gap-2">
@@ -221,8 +294,8 @@ const RenderGenerativeUi = (ui: string) => {
         )}
       </section>
 
-      {/* ✅ Input Section */}
-      <section>
+      {/* Input Box */}
+      <section className="p-5">
         <div className="border rounded-2xl p-4 shadow relative">
           <Textarea
             placeholder="Start typing here..."
@@ -231,7 +304,6 @@ const RenderGenerativeUi = (ui: string) => {
             value={userInput}
           />
 
-          {/* ✅ Send Button */}
           <Button
             size="icon"
             className="absolute bottom-6 right-6"

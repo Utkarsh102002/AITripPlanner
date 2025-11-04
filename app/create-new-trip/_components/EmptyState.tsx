@@ -12,7 +12,7 @@ function EmptyState({ onSelectOption }: { onSelectOption: (value: string) => voi
   return (
     <div className="text-center px-6 py-4">
       <h2 className="text-2xl font-semibold text-blue-900 mb-2">
-        Start Planning A Trip
+        Start Planning A Trip with me 
       </h2>
 
       <p className="text-gray-600 mb-6">

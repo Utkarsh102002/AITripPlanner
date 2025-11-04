@@ -40,10 +40,10 @@ function Hero() {
     <div className="mt-24 w-full flex justify-center">
       {/* Content */}
       <div className="max-w-3xl w-full text-center space-y-6">
-        <h1 className="text-xl md:text-3xl font-bold">
-          Hey, I'm Your Personal Trip Planner
+        <h1 className="text-3xll md:text-3xl font-bold">
+          Hey,I'm Your Personal Trip Planner
         </h1>
-        <p className="text-lg">Tell me what you want i will handle the rest</p>
+        <p className="text-lg">Tell me where you want to plan a trip . I will handle rest ...</p>
 
         {/* input box */}
         <div className="border rounded-2xl p-4 shadow relative">
@@ -73,7 +73,7 @@ function Hero() {
         </div>
         <div className=" flex items-center justify-center flex-col">
           <h2 className="my-7 mt-14 flex gap-2 text-center">
-            Not sure to start? <strong>See How It Work</strong>
+            Not sure how to start? <strong>See How My App Work</strong>
           </h2>
           {/* videosection */}
           <HeroVideoDialog

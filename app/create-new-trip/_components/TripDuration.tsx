@@ -7,7 +7,7 @@ export const DurationOptions = [
     title: "Weekend Getaway",
     desc: "2–3 days trip",
     icon: "🌇",
-    value: "2-3 Days",
+    value: "3 Days",
   },
   {
     id: 2,
