@@ -120,6 +120,8 @@
 //     return NextResponse.json({ resp: "Server error. Try again.", ui: "none" });
 //   }
 // }
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
