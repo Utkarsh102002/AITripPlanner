@@ -7,7 +7,6 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const menuOptions = [
   { name: "Home", path: "/" },
-  { name: "Pricing", path: "/pricing" },
   { name: "Contact Us", path: "/contact-us" },
 ];
 
@@ -50,7 +49,7 @@ function Header() {
             <Link href="/create-new-trip">
               <Button className="px-5">Create New Trip</Button>
             </Link>
-            <UserButton/>
+            <UserButton />
           </div>
         </SignedIn>
       </div>
