@@ -8,7 +8,7 @@ const interestOptions = [
   { id: 4, label: "Culture 🏛️" },
   { id: 5, label: "Food 🍜" },
   { id: 6, label: "Shopping 🛍️" },
-];
+]
 
 function Interests({ onSelect }: { onSelect: (val: string) => void }) {
   const [selected, setSelected] = useState<string[]>([]);

@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "minimax/minimax-m2:free",
+      model: "tngtech/deepseek-r1t2-chimera:free",
       messages: [{ role: "system", content: PROMPT }, ...messages],
     });
 
