@@ -26,13 +26,11 @@ function ChatBox({ onFinalTrip }: ChatBoxProps) {
   const [userInput, setUserInput] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Send message handler
   const onSend = async () => {
     if (!userInput.trim()) return;
 
     const newMsg: Message = { role: "user", content: userInput };
 
-    // Add user message immediately
     setMessages((prev) => [...prev, newMsg]);
     setUserInput("");
     setLoading(true);
@@ -45,7 +43,6 @@ function ChatBox({ onFinalTrip }: ChatBoxProps) {
       const aiResponse = result?.data?.resp || "No response received.";
       const uiType = result?.data?.ui || "none";
 
-      // ✅ Detect final trip plan automatically
       if (
         uiType === "final" ||
         aiResponse.toLowerCase().includes("trip summary") ||
@@ -92,7 +89,6 @@ function ChatBox({ onFinalTrip }: ChatBoxProps) {
 
   return (
     <div className="h-[75vh] flex flex-col">
-      {/* Empty start screen */}
       {messages.length === 0 && (
         <EmptyState
           onSelectOption={(v: string) => {
@@ -102,7 +98,6 @@ function ChatBox({ onFinalTrip }: ChatBoxProps) {
         />
       )}
 
-      {/* Chat Section */}
       <section className="flex-1 overflow-y-auto p-4 mb-3">
         {messages.map((msg, index) =>
           msg.role === "user" ? (
@@ -121,7 +116,6 @@ function ChatBox({ onFinalTrip }: ChatBoxProps) {
           )
         )}
 
-        {/* Loader */}
         {loading && (
           <div className="flex justify-start mt-2">
             <div className="max-w-lg bg-gray-100 text-black px-4 py-2 rounded-lg shadow flex items-center gap-2">
@@ -132,7 +126,6 @@ function ChatBox({ onFinalTrip }: ChatBoxProps) {
         )}
       </section>
 
-      {/* Input Box */}
       <section className="p-5">
         <div className="border rounded-2xl p-4 shadow relative">
           <Textarea

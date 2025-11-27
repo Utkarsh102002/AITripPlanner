@@ -34,18 +34,18 @@ function Hero() {
 
       return;
     }
-    router.push('/create-new-trip')
+    router.push("/create-new-trip");
   };
   return (
     <div className="mt-24 w-full flex justify-center">
-      {/* Content */}
       <div className="max-w-3xl w-full text-center space-y-6">
         <h1 className="text-3xll md:text-3xl font-bold">
           Hey,I'm Your Personal Trip Planner
         </h1>
-        <p className="text-lg">Tell me where you want to plan a trip . I will handle rest ...</p>
+        <p className="text-lg">
+          Tell me where you want to plan a trip . I will handle rest ...
+        </p>
 
-        {/* input box */}
         <div className="border rounded-2xl p-4 shadow relative">
           <Textarea
             placeholder="Create a Trip To Goa This Weekend ..."
@@ -59,7 +59,7 @@ function Hero() {
             <Send className="h-4 w-4" />
           </Button>
         </div>
-        {/* suggestion list */}
+
         <div className="flex gap-5">
           {suggestions.map((suggestion, index) => (
             <div
@@ -67,7 +67,9 @@ function Hero() {
               className="flex items-center gap-2 border rounded-full p-2 cursor-pointer hover:scale-105"
             >
               {suggestion.icon}
-              <h2 className="text-sm ">{suggestion.title}</h2>
+              <h2 className="text-sm " onClick={() => onSend()}>
+                {suggestion.title}
+              </h2>
             </div>
           ))}
         </div>
@@ -75,7 +77,7 @@ function Hero() {
           <h2 className="my-7 mt-14 flex gap-2 text-center">
             Not sure how to start? <strong>See How My App Work</strong>
           </h2>
-          {/* videosection */}
+
           <HeroVideoDialog
             className="block dark:hidden"
             animationStyle="from-center"
