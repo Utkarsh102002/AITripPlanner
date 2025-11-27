@@ -13,6 +13,7 @@ const menuOptions = [
 function Header() {
   return (
     <header className="flex justify-between items-center p-4 shadow-sm bg-white sticky top-0 z-50">
+      {/* ---- Logo ---- */}
       <div className="flex gap-2 items-center">
         <Image src="/logo.svg" alt="logo" width={32} height={32} />
         <h2 className="font-bold text-2xl text-gray-800 tracking-tight">
@@ -20,6 +21,7 @@ function Header() {
         </h2>
       </div>
 
+      {/* ---- Navigation Menu ---- */}
       <nav className="hidden md:flex gap-8 items-center">
         {menuOptions.map((menu, index) => (
           <Link
@@ -32,13 +34,16 @@ function Header() {
         ))}
       </nav>
 
+      {/* ---- Auth Section ---- */}
       <div className="flex items-center gap-4">
+        {/* When logged out */}
         <SignedOut>
           <SignInButton mode="modal">
             <Button className="px-5">Get Started</Button>
           </SignInButton>
         </SignedOut>
 
+        {/* When logged in */}
         <SignedIn>
           <div className="flex items-center gap-3">
             <Link href="/create-new-trip">
